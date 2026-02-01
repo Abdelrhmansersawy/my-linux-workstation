@@ -1,0 +1,248 @@
+include "dms/input.kdl"
+include "dms/environment.kdl"
+include "dms/alttab.kdl"
+include "dms/binds.kdl"
+
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+spawn-at-startup "niriusd"
+spawn-at-startup "/home/sersawy/.config/niri/fix-startup.sh"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+layout {
+    gaps 10
+    struts {
+        left 0
+        right 0
+        top 0
+        bottom 0
+    }
+    center-focused-column "always"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { proportion 1.0; }
+
+    border {
+        width 1
+    }
+
+    focus-ring {
+        width 2
+    }
+
+    shadow {
+        softness 30
+        spread 5
+        offset x=0 y=5
+    }
+}
+
+layer-rule {
+    match namespace="^quickshell$"
+    place-within-backdrop true
+}
+
+window-rule {
+    match app-id=r#"^org\.gnome\."#
+    match app-id="Alacritty"
+    match app-id="zen"
+    match app-id="com.mitchellh.ghostty"
+    match app-id="kitty"
+    draw-border-with-background true
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"zen$"# title="^Picture-in-Picture$"
+    match app-id="^org.telegram.desktop$" title="^TelegramDesktop$"
+    open-floating true
+    default-floating-position x=6 y=6 relative-to="bottom-right"
+}
+
+window-rule {
+    match app-id="^org.telegram.desktop$" title="^Media viewer$"
+    open-fullscreen false
+}
+
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+binds {
+    // === Application Launchers ===
+    Mod+Return hotkey-overlay-title="Terminal" { spawn "kitty" "--working-directory=$(omarchy-cmd-terminal-cwd)"; }
+    Mod+F hotkey-overlay-title="File Manager" { spawn "nautilus" "--new-window"; }
+    Mod+B hotkey-overlay-title="Browser" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-browser"; }
+    Mod+Shift+B hotkey-overlay-title="Browser (Private)" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-browser" "--private"; }
+    Mod+M hotkey-overlay-title="Music (Spotify)" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-or-focus" "spotify"; }
+    Mod+N hotkey-overlay-title="Default Editor" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-editor"; }
+    Mod+T hotkey-overlay-title="GNOME Editor" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-or-focus" "gnome-text-editor"; }
+    Mod+Shift+T hotkey-overlay-title="Activity (btop)" { spawn "ghostty" "-e" "btop"; }
+    Mod+D hotkey-overlay-title="Docker (Lazydocker)" { spawn "ghostty" "-e" "lazydocker"; }
+    Mod+G hotkey-overlay-title="GitHub" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://github.com"; }
+    Mod+O hotkey-overlay-title="Obsidian" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-or-focus" "obsidian" "obsidian -disable-gpu --enable-wayland-ime"; }
+    Mod+Slash hotkey-overlay-title="Passwords (1Password)" { spawn "1password"; }
+
+    // === Web Apps ===
+    Mod+A hotkey-overlay-title="ChatGPT" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://chatgpt.com"; }
+    Mod+Shift+A hotkey-overlay-title="Grok" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://grok.com"; }
+    Mod+Y hotkey-overlay-title="YouTube" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-or-focus-webapp" "YouTube" "https://youtube.com/"; }
+    Mod+Shift+G hotkey-overlay-title="WhatsApp" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-or-focus-webapp" "WhatsApp" "https://web.whatsapp.com/"; }
+    Mod+X hotkey-overlay-title="X (Twitter)" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://x.com/"; }
+    Mod+Shift+X hotkey-overlay-title="X Post" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://x.com/compose/post"; }
+    Mod+H hotkey-overlay-title="Discord" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://discord.com/app"; }
+    Mod+C hotkey-overlay-title="Codeforces" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://codeforces.com"; }
+
+    // === Window Management ===
+    Mod+W repeat=false { close-window; }
+    Mod+Shift+F { expand-column-to-available-width; }
+    Mod+Shift+V { toggle-window-floating; }
+    Mod+Alt+V { switch-focus-between-floating-and-tiling; }
+    Mod+Q { toggle-column-tabbed-display; }
+
+    // === Focus Navigation ===
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+
+    // === Window Movement ===
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Down  { move-window-down; }
+    Mod+Shift+Up    { move-window-up; }
+    Mod+Shift+Right { move-column-right; }
+
+    // === Column Navigation ===
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End  { move-column-to-last; }
+
+    // === Workspace Navigation ===
+    Mod+Page_Down      { focus-workspace-down; }
+    Mod+Page_Up        { focus-workspace-up; }
+    Mod+I              { focus-workspace-down; }
+    Mod+U              { focus-workspace-up; }
+    Mod+Ctrl+Down { move-column-to-workspace-down; }
+    Mod+Ctrl+Up   { move-column-to-workspace-up; }
+    Mod+Ctrl+I         { move-column-to-workspace-down; }
+    Mod+Ctrl+U         { move-column-to-workspace-up; }
+
+    // === Move Workspaces ===
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+    Mod+Shift+I         { move-workspace-down; }
+    Mod+Shift+U         { move-workspace-up; }
+
+    // === Mouse Wheel Navigation ===
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+WheelScrollLeft       { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    Mod+Shift+WheelScrollDown      { focus-column-right; }
+    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    // === Numbered Workspaces ===
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    // === Move to Numbered Workspaces ===
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    // === Column Management ===
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Period { expel-window-from-column; }
+
+    // === Sizing & Layout ===
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+Ctrl+F { fullscreen-window; }
+    Mod+Shift+C { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    // === Manual Sizing ===
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    // === Screenshots ===
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // === System Controls ===
+    Mod+Escape hotkey-overlay-title="Settings/Power" { spawn "dms" "ipc" "call" "settings" "toggle"; }
+    Mod+Shift+S hotkey-overlay-title="Suspend" { spawn "systemctl" "suspend"; }
+    Mod+Shift+P { power-off-monitors; }
+    Mod+Alt+S hotkey-overlay-title="Lock & Suspend" { spawn "bash" "-c" "loginctl lock-session && systemctl suspend"; }
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+config-notification {
+    disable-failed
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+debug {
+    honor-xdg-activation-with-invalid-serial
+}
+
+include "dms/animations.kdl"
+include "dms/wpblur.kdl"
+include "dms/colors.kdl"
+include "dms/outputs.kdl"
+
+// Default workspaces (6 workspaces)
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"
+workspace "5"
