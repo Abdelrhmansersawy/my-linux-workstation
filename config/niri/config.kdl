@@ -100,6 +100,7 @@ binds {
     Mod+Shift+X hotkey-overlay-title="X Post" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://x.com/compose/post"; }
     Mod+H hotkey-overlay-title="Discord" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://discord.com/app"; }
     Mod+C hotkey-overlay-title="Codeforces" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "https://codeforces.com"; }
+    Mod+Shift+M hotkey-overlay-title="Tasks" { spawn "/home/sersawy/.local/share/omarchy/bin/omarchy-launch-webapp" "http://localhost:51888"; }
 
     // === Window Management ===
     Mod+W repeat=false { close-window; }
