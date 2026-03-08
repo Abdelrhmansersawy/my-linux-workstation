@@ -1,0 +1,41 @@
+animations {
+    // Fast, snappy animations like Hyprland
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=2000 epsilon=0.001
+    }
+
+    window-open {
+        duration-ms 80
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 80
+        curve "ease-out-quad"
+    }
+
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=1800 epsilon=0.001
+    }
+
+    window-movement {
+        spring damping-ratio=1.0 stiffness=1500 epsilon=0.001
+    }
+
+    window-resize {
+        spring damping-ratio=1.0 stiffness=1500 epsilon=0.001
+    }
+
+    config-notification-open-close {
+        spring damping-ratio=1.0 stiffness=1500 epsilon=0.001
+    }
+
+    screenshot-ui-open {
+        duration-ms 100
+        curve "ease-out-quad"
+    }
+
+    overview-open-close {
+        spring damping-ratio=1.0 stiffness=1500 epsilon=0.001
+    }
+}

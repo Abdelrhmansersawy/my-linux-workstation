@@ -1,0 +1,19 @@
+input {
+    keyboard {
+        xkb {
+            layout "us,ara"
+            variant ",digits"
+            options "caps:escape,compose:menu,grp:alts_toggle"
+        }
+        numlock
+    }
+
+    touchpad {
+        natural-scroll
+        scroll-factor 0.4
+        tap // tap-to-click
+        dwt // disable-when-typing
+    }
+
+    // workspace-auto-back-and-forth
+}
